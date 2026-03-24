@@ -29,29 +29,51 @@ const PaymentModal = ({ orderId, amount, onClose, onPaymentComplete, customerPho
         throw new Error(data.message || 'Failed to initiate payment');
       }
 
-      // Redirect to Paytm's hosted payment page which shows ALL payment options
-      // This page has QR code, NetBanking, Cards, Wallets, etc. all on one page
-      const environment = data.isProduction ? 'PRODUCTION' : 'STAGING';
-      const hostname = data.isProduction
-        ? 'https://securegw.paytm.in'
-        : 'https://securestage.paytm.in';
+      // Use Paytm CheckoutJS with hybrid flow to show all payment options
+      // Setting flow to HYBRID shows both QR code and NetBanking prominently
+      const config = {
+        root: '',
+        flow: 'HYBRID',
+        data: {
+          orderId: data.orderId,
+          token: data.txnToken,
+          tokenType: 'TXN_TOKEN',
+          amount: data.amount,
+        },
+        handler: {
+          notifyMerchant: (eventName, data) => {
+            console.log('Paytm event:', eventName, data);
+          },
+          transactionStatus: async (paymentStatus) => {
+            console.log('Payment status:', paymentStatus);
+            if (window.Paytm && window.Paytm.CheckoutJS) {
+              window.Paytm.CheckoutJS.close();
+            }
+            if (paymentStatus.STATUS === 'TXN_SUCCESS') {
+              onPaymentComplete({ status: 'success', paymentStatus });
+            } else {
+              setError(`Payment ${paymentStatus.STATUS === 'TXN_FAILURE' ? 'failed' : 'was not completed'}`);
+              setLoading(false);
+            }
+          },
+        },
+        merchant: {
+          mid: data.mid,
+          redirect: false,
+        },
+        mapClientData: {
+          env: data.isProduction ? 'PRODUCTION' : 'STAGE',
+        },
+      };
 
-      const paymentPageUrl = `${hostname}/theia/paytmby?orderid=${data.orderId}&mid=${data.mid}&txnToken=${data.txnToken}&amount=${data.amount}`;
+      console.log('Opening Paytm checkout with HYBRID flow (QR + NetBanking)');
 
-      console.log('Redirecting to Paytm hosted payment page:', paymentPageUrl);
-
-      // Open in new window so user can come back
-      const paymentWindow = window.open(paymentPageUrl, 'paymentWindow', 'width=600,height=700');
-
-      // Check if payment window is still open and wait for close
-      const checkWindowInterval = setInterval(() => {
-        if (paymentWindow.closed) {
-          clearInterval(checkWindowInterval);
-          // Window closed - user might have completed payment or cancelled
-          // For now, assume success if they closed the window (they should check their order)
-          onPaymentComplete({ status: 'success', paymentStatus: { STATUS: 'TXN_SUCCESS' } });
-        }
-      }, 1000);
+      if (window.Paytm && window.Paytm.CheckoutJS) {
+        await window.Paytm.CheckoutJS.init(config);
+        window.Paytm.CheckoutJS.invoke();
+      } else {
+        throw new Error('Paytm Checkout JS not loaded. Please refresh the page.');
+      }
     } catch (err) {
       console.error('Payment initiation error:', err);
       setError(err.message || 'Something went wrong');
