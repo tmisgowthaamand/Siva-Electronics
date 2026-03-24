@@ -2,6 +2,7 @@ import React, { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CreditCard, Truck, MapPin, Phone, Mail, User, Shield, Wallet, Banknote, Loader, AlertCircle } from 'lucide-react';
 import { useCart } from '../context/CartContext';
+import PaymentModal from './PaymentModal';
 import './Checkout.css';
 
 const Checkout = () => {
@@ -10,6 +11,8 @@ const Checkout = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [paymentLoading, setPaymentLoading] = useState(false);
   const [paymentError, setPaymentError] = useState(null);
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [currentOrderData, setCurrentOrderData] = useState(null);
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -106,98 +109,44 @@ const Checkout = () => {
     return `SE${timestamp.slice(-6)}${random}`;
   };
 
-  const initiatePaytmPayment = useCallback(async (orderId, amount) => {
-    setPaymentLoading(true);
-    setPaymentError(null);
-    try {
-      const apiUrl = import.meta.env.VITE_API_URL || '';
-      const response = await fetch(`${apiUrl}/api/payment/initiate`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          orderId,
-          amount: String(amount),
-          customerId: `CUST_${formData.phone}`,
-          customerEmail: formData.email,
-          customerPhone: formData.phone,
-        }),
-      });
+  const handlePaymentModalOpen = useCallback((orderId, amount) => {
+    setCurrentOrderData({ orderId, amount });
+    setShowPaymentModal(true);
+  }, []);
 
-      const data = await response.json();
-      if (!data.success || !data.txnToken) {
-        throw new Error(data.message || 'Failed to initiate payment');
-      }
+  const handlePaymentModalClose = useCallback(() => {
+    setShowPaymentModal(false);
+    setCurrentOrderData(null);
+  }, []);
 
-      const config = {
-        root: '',
-        flow: 'APPINVOKE',
-        data: {
-          orderId: data.orderId,
-          token: data.txnToken,
-          tokenType: 'TXN_TOKEN',
-          amount: data.amount,
+  const handlePaymentComplete = useCallback((paymentResult) => {
+    if (paymentResult.status === 'success' && currentOrderData) {
+      const orderData = {
+        orderId: currentOrderData.orderId,
+        items,
+        total: currentOrderData.amount,
+        shippingInfo: {
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          email: formData.email,
+          phone: formData.phone,
+          address: formData.address,
+          city: formData.city,
+          state: formData.state,
+          pincode: formData.pincode,
         },
-        handler: {
-          notifyMerchant: (eventName, data) => {
-            console.log('Paytm event:', eventName, data);
-          },
-          transactionStatus: async (paymentStatus) => {
-            console.log('Payment status:', paymentStatus);
-            if (window.Paytm && window.Paytm.CheckoutJS) {
-              window.Paytm.CheckoutJS.close();
-            }
-            if (paymentStatus.STATUS === 'TXN_SUCCESS') {
-              const orderData = {
-                orderId,
-                items,
-                total: amount,
-                shippingInfo: {
-                  firstName: formData.firstName,
-                  lastName: formData.lastName,
-                  email: formData.email,
-                  phone: formData.phone,
-                  address: formData.address,
-                  city: formData.city,
-                  state: formData.state,
-                  pincode: formData.pincode,
-                },
-                paymentMethod: 'online',
-                paymentStatus: 'confirmed',
-                transactionId: paymentStatus.TXNID,
-                orderDate: new Date().toISOString(),
-                estimatedDelivery: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
-              };
-              localStorage.setItem('lastOrder', JSON.stringify(orderData));
-              clearCart();
-              navigate('/order-confirmation');
-            } else {
-              setPaymentError(`Payment ${paymentStatus.STATUS === 'TXN_FAILURE' ? 'failed' : 'was not completed'}. Please try again.`);
-              setPaymentLoading(false);
-            }
-          },
-        },
-        merchant: {
-          mid: data.mid,
-          redirect: false,
-        },
-        mapClientData: {
-          env: data.isProduction ? 'PRODUCTION' : 'STAGE',
-        },
+        paymentMethod: 'online',
+        paymentStatus: 'confirmed',
+        transactionId: paymentResult.paymentStatus?.TXNID || 'MANUAL_CONFIRM',
+        orderDate: new Date().toISOString(),
+        estimatedDelivery: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
       };
-
-      if (window.Paytm && window.Paytm.CheckoutJS) {
-        await window.Paytm.CheckoutJS.init(config);
-        window.Paytm.CheckoutJS.invoke();
-      } else {
-        throw new Error('Paytm Checkout JS not loaded. Please refresh the page.');
-      }
-    } catch (err) {
-      console.error('Payment initiation error:', err);
-      setPaymentError(err.message || 'Something went wrong. Please try again.');
-    } finally {
-      setPaymentLoading(false);
+      localStorage.setItem('lastOrder', JSON.stringify(orderData));
+      clearCart();
+      handlePaymentModalClose();
+      navigate('/order-confirmation');
     }
-  }, [formData, items, clearCart, navigate]);
+  }, [currentOrderData, items, formData, clearCart, navigate, handlePaymentModalClose]);
 
   const handlePlaceOrder = () => {
     if (validateStep(2)) {
@@ -205,7 +154,7 @@ const Checkout = () => {
       const finalTotal = total + (formData.paymentMethod === 'cod' ? 50 : 0);
 
       if (formData.paymentMethod === 'online') {
-        initiatePaytmPayment(orderId, finalTotal);
+        handlePaymentModalOpen(orderId, finalTotal);
       } else {
         const orderData = {
           orderId,
@@ -653,6 +602,18 @@ const Checkout = () => {
           </div>
         </div>
       </div>
+
+      {/* Payment Modal */}
+      {showPaymentModal && currentOrderData && (
+        <PaymentModal
+          orderId={currentOrderData.orderId}
+          amount={currentOrderData.amount}
+          onClose={handlePaymentModalClose}
+          onPaymentComplete={handlePaymentComplete}
+          customerPhone={formData.phone}
+          customerEmail={formData.email}
+        />
+      )}
     </div>
   );
 };
