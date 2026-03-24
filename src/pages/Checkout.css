@@ -1354,3 +1354,302 @@ textarea.form-input {
     transform: rotate(360deg);
   }
 }
+
+/* ===== MV TRADERS STYLE PAYMENT MODAL ===== */
+
+.payment-modal-mv-style {
+  width: 100%;
+  max-width: 420px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  animation: slideUp 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+/* Close Button */
+.payment-modal-header-mv {
+  display: flex;
+  justify-content: flex-end;
+  padding: 16px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.payment-modal-close-btn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #666;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+.payment-modal-close-btn:hover {
+  background: #f5f5f5;
+  color: #000;
+}
+
+/* Merchant Info Section */
+.payment-merchant-section {
+  padding: 16px;
+  text-align: center;
+  border-bottom: 1px solid #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.payment-merchant-section h2 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #000;
+  margin: 0;
+  flex: 1;
+  text-align: left;
+}
+
+.paytm-badge {
+  background: #1f7ce6;
+  color: white;
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  display: inline-block;
+}
+
+.paytm-badge img {
+  height: 24px;
+  width: auto;
+}
+
+/* Amount Section */
+.payment-amount-section {
+  padding: 16px;
+  text-align: center;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.select-text {
+  font-size: 14px;
+  color: #666;
+  margin: 0 0 8px 0;
+  font-weight: 500;
+}
+
+.amount-large {
+  font-size: 32px;
+  font-weight: 700;
+  color: #000;
+  margin: 0;
+}
+
+/* Error Banner */
+.payment-error-banner {
+  background: #fff3cd;
+  border-left: 4px solid #ffc107;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #856404;
+  font-size: 14px;
+  margin: 0;
+}
+
+.payment-error-banner svg {
+  color: #ffc107;
+  flex-shrink: 0;
+}
+
+/* Main Content - QR Section */
+.payment-content-mv {
+  padding: 24px 16px;
+  text-align: center;
+}
+
+.qr-loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 40px 0;
+}
+
+.qr-main-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.qr-code-container {
+  background: #f5f5f5;
+  padding: 16px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.qr-code-image {
+  width: 200px;
+  height: 200px;
+  object-fit: contain;
+}
+
+.qr-scan-text {
+  font-size: 18px;
+  font-weight: 600;
+  color: #000;
+  margin: 8px 0 4px 0;
+}
+
+.upi-apps-logos {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 8px 0;
+  font-size: 12px;
+  color: #0066cc;
+}
+
+.upi-apps-logos span {
+  font-weight: 500;
+}
+
+.powered-by-upi {
+  font-size: 12px;
+  color: #999;
+  margin: 4px 0 0 0;
+}
+
+/* More Payment Options */
+.more-payment-options {
+  padding: 16px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.more-payment-options h3 {
+  font-size: 14px;
+  font-weight: 600;
+  color: #000;
+  margin: 0 0 12px 0;
+  text-align: left;
+}
+
+.payment-option-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  margin-bottom: 8px;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: left;
+}
+
+.payment-option-item:hover:not(:disabled) {
+  border-color: #1f7ce6;
+  background: #f9f9f9;
+  box-shadow: 0 2px 8px rgba(31, 124, 230, 0.1);
+}
+
+.payment-option-item:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.option-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.option-icon {
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: #f5f5f5;
+  border-radius: 4px;
+}
+
+.option-text {
+  flex: 1;
+}
+
+.option-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #000;
+  margin: 0;
+}
+
+.option-subtitle {
+  font-size: 12px;
+  color: #999;
+  margin: 2px 0 0 0;
+}
+
+/* Security Footer */
+.payment-security-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 12px 16px;
+  background: #f5f5f5;
+  border-top: 1px solid #e0e0e0;
+  font-size: 12px;
+  color: #666;
+  font-weight: 500;
+}
+
+.payment-security-footer svg {
+  color: #27ae60;
+  flex-shrink: 0;
+}
+
+.paytm-text {
+  color: #1f7ce6;
+  font-weight: 700;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .payment-modal-mv-style {
+    max-width: calc(100% - 32px);
+  }
+
+  .amount-large {
+    font-size: 24px;
+  }
+
+  .qr-code-image {
+    width: 160px;
+    height: 160px;
+  }
+}
