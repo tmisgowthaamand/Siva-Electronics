@@ -25,6 +25,7 @@ const allowedOrigins = [
   'http://127.0.0.1:3000',
   'http://127.0.0.1:8080',
   'https://siva-electronics.vercel.app',
+  'https://siva-electronics-three.vercel.app',
   'https://www.sivaappliances.shop',
   'https://sivaappliances.shop',
   process.env.FRONTEND_URL,
