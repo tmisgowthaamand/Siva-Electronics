@@ -130,7 +130,7 @@ const Checkout = () => {
 
       const config = {
         root: '',
-        flow: 'DEFAULT',
+        flow: 'APPINVOKE',
         data: {
           orderId: data.orderId,
           token: data.txnToken,
@@ -183,12 +183,6 @@ const Checkout = () => {
         mapClientData: {
           env: data.isProduction ? 'PRODUCTION' : 'STAGE',
         },
-        customConfig: {
-          udf1: '',
-          udf2: '',
-          udf3: '',
-        },
-        paymentTypeOrder: ['UPI', 'DEBIT_CARD', 'CREDIT_CARD', 'NETBANKING', 'EMI', 'WALLET'],
       };
 
       if (window.Paytm && window.Paytm.CheckoutJS) {
