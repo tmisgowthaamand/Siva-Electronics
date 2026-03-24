@@ -188,6 +188,7 @@ const Checkout = () => {
           udf2: '',
           udf3: '',
         },
+        paymentTypeOrder: ['UPI', 'DEBIT_CARD', 'CREDIT_CARD', 'NETBANKING', 'EMI', 'WALLET'],
       };
 
       if (window.Paytm && window.Paytm.CheckoutJS) {
