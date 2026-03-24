@@ -1,0 +1,277 @@
+.qr-payment-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}
+
+.qr-payment-card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  max-width: 450px;
+  width: 100%;
+  overflow: hidden;
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Header */
+.qr-payment-header {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  gap: 15px;
+}
+
+.back-button {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  border-radius: 8px;
+  padding: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.back-button:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.merchant-info {
+  flex: 1;
+}
+
+.merchant-info h2 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.merchant-info p {
+  margin: 4px 0 0 0;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+/* QR Section */
+.qr-loading,
+.qr-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 30px;
+  gap: 15px;
+  text-align: center;
+}
+
+.qr-loading {
+  color: #667eea;
+}
+
+.qr-error {
+  color: #e74c3c;
+}
+
+.spinner {
+  animation: spin 2s linear infinite;
+  color: currentColor;
+}
+
+.spinner-small {
+  animation: spin 2s linear infinite;
+  color: #667eea;
+  margin-right: 8px;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.qr-section {
+  padding: 40px 30px;
+  text-align: center;
+}
+
+.qr-code-wrapper {
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 20px;
+  display: inline-block;
+  margin-bottom: 20px;
+}
+
+.qr-code-image {
+  width: 250px;
+  height: 250px;
+  border-radius: 8px;
+  display: block;
+}
+
+.scan-instructions {
+  margin-top: 20px;
+}
+
+.scan-text {
+  margin: 0 0 8px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+}
+
+.upi-logos {
+  font-size: 12px;
+  color: #999;
+  letter-spacing: 0.5px;
+}
+
+/* Payment Status */
+.payment-status {
+  padding: 20px 30px;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+  text-align: center;
+}
+
+.status-pending,
+.status-success {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-weight: 500;
+}
+
+.status-pending {
+  color: #667eea;
+  flex-wrap: wrap;
+}
+
+.status-pending small {
+  width: 100%;
+  display: block;
+  font-size: 11px;
+  color: #999;
+  margin-top: 4px;
+}
+
+.status-success {
+  color: #27ae60;
+  font-size: 18px;
+}
+
+/* Payment Info */
+.payment-info {
+  padding: 30px;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.info-row:last-child {
+  margin-bottom: 0;
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.info-row span {
+  color: #999;
+  font-size: 14px;
+}
+
+.info-row strong {
+  color: #333;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* Security Notice */
+.security-notice {
+  background: #f8f9fa;
+  padding: 15px 30px;
+  text-align: center;
+  border-top: 1px solid #eee;
+}
+
+.security-notice p {
+  margin: 0;
+  font-size: 12px;
+  color: #666;
+  font-weight: 500;
+}
+
+.retry-button {
+  background: #667eea;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.retry-button:hover {
+  background: #5568d3;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .qr-payment-card {
+    border-radius: 12px;
+  }
+
+  .qr-payment-header {
+    padding: 15px;
+  }
+
+  .merchant-info h2 {
+    font-size: 16px;
+  }
+
+  .merchant-info p {
+    font-size: 20px;
+  }
+
+  .qr-code-image {
+    width: 200px;
+    height: 200px;
+  }
+
+  .qr-section {
+    padding: 30px 20px;
+  }
+
+  .payment-info {
+    padding: 20px;
+  }
+}

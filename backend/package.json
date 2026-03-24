@@ -1,0 +1,24 @@
+{
+  "name": "siva-electronics-backend",
+  "version": "1.0.0",
+  "description": "Backend API for Siva Electronics with Paytm payment integration",
+  "type": "module",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "axios": "^1.4.0",
+    "crypto": "^1.0.1",
+    "qrcode": "^1.5.3",
+    "paytmchecksum": "^1.5.0",
+    "body-parser": "^1.20.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}

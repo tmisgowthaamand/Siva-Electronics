@@ -1,0 +1,327 @@
+.footer {
+  background: var(--primary);
+  color: var(--white);
+  padding: var(--spacing-3xl) 0 0;
+}
+
+.footer-content {
+  display: grid;
+  grid-template-columns: 2fr 1.2fr 1.5fr 1.3fr 1.5fr;
+  gap: var(--spacing-2xl);
+  margin-bottom: var(--spacing-3xl);
+  align-items: start;
+}
+
+.footer-section {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Footer Logo */
+.footer-logo {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-lg);
+}
+
+.footer-logo .logo-icon {
+  font-size: var(--font-size-2xl);
+  color: var(--cta-accent);
+}
+
+.footer-logo .logo-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.footer-logo .logo-main {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  color: var(--white);
+}
+
+.footer-logo .logo-sub {
+  font-size: var(--font-size-xs);
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 500;
+}
+
+.footer-description {
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.6;
+  margin-bottom: var(--spacing-lg);
+}
+
+
+
+/* Footer Titles */
+.footer-title {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  color: var(--white);
+  margin-bottom: var(--spacing-lg);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  position: relative;
+}
+
+.footer-title::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 30px;
+  height: 2px;
+  background: var(--cta-accent);
+  border-radius: 1px;
+}
+
+/* Footer Links */
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links li {
+  margin-bottom: 0;
+}
+
+.footer-links a {
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  transition: all 0.2s ease;
+  font-size: var(--font-size-sm);
+  display: block;
+  padding: var(--spacing-xs) 0;
+  line-height: 1.4;
+  border-radius: var(--radius-sm);
+}
+
+.footer-links a:hover {
+  color: var(--cta-accent);
+  padding-left: var(--spacing-xs);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* Quick Links & Categories - Vertical Layout */
+.footer-section:nth-child(2) .footer-links,
+.footer-section:nth-child(3) .footer-links {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.footer-section:nth-child(2) .footer-links a,
+.footer-section:nth-child(3) .footer-links a {
+  padding: 6px 0;
+  white-space: normal;
+  transition: all 0.3s ease;
+  display: inline-block;
+  width: fit-content;
+}
+
+.footer-section:nth-child(2) .footer-links a:hover,
+.footer-section:nth-child(3) .footer-links a:hover {
+  background: transparent;
+  color: var(--cta-accent);
+  padding-left: 8px;
+}
+
+/* Responsive adjustments for footer links */
+@media (max-width: 1024px) {
+  .footer-content {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-xl);
+  }
+
+  .footer-section:nth-child(4),
+  .footer-section:nth-child(5) {
+    grid-column: span 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-2xl);
+  }
+
+  .footer-section:nth-child(2) .footer-links {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+
+  .footer-section:nth-child(3) .footer-links {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+
+  .footer-links a:hover {
+    padding-left: 0;
+    transform: none;
+  }
+}
+
+/* Contact Info */
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+  margin-top: var(--spacing-sm);
+}
+
+.contact-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-md);
+  color: rgba(255, 255, 255, 0.9);
+  font-size: var(--font-size-sm);
+  line-height: 1.5;
+  padding: var(--spacing-xs) 0;
+}
+
+.contact-item svg {
+  color: var(--cta-accent);
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+/* Newsletter */
+.newsletter-text {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: var(--font-size-sm);
+  line-height: 1.6;
+  margin-bottom: var(--spacing-lg);
+  margin-top: var(--spacing-sm);
+}
+
+.newsletter-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.newsletter-input {
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--white);
+  font-size: var(--font-size-sm);
+  transition: border-color 0.2s ease;
+}
+
+.newsletter-input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.newsletter-input:focus {
+  outline: none;
+  border-color: var(--cta-accent);
+}
+
+.newsletter-btn {
+  background: var(--cta-accent);
+  color: var(--primary);
+  border: none;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+  font-size: var(--font-size-sm);
+}
+
+.newsletter-btn:hover {
+  background: #EAB308;
+  transform: translateY(-1px);
+}
+
+/* Footer Bottom */
+.footer-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: var(--spacing-lg) 0;
+}
+
+.footer-bottom-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--spacing-lg);
+}
+
+.copyright {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: var(--font-size-sm);
+  margin: 0;
+}
+
+.footer-bottom-links {
+  display: flex;
+  gap: var(--spacing-lg);
+  flex-wrap: wrap;
+}
+
+.footer-bottom-links a {
+  color: rgba(255, 255, 255, 0.6);
+  text-decoration: none;
+  font-size: var(--font-size-sm);
+  transition: color 0.2s ease;
+}
+
+.footer-bottom-links a:hover {
+  color: var(--cta-accent);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-xl);
+  }
+
+  .footer-bottom-content {
+    flex-direction: column;
+    text-align: center;
+    gap: var(--spacing-md);
+  }
+
+  .footer-bottom-links {
+    gap: var(--spacing-md);
+    justify-content: center;
+  }
+
+  .newsletter-form {
+    flex-direction: row;
+  }
+
+  .newsletter-input {
+    flex: 1;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer {
+    padding: var(--spacing-2xl) 0 0;
+  }
+
+  .footer-content {
+    gap: var(--spacing-lg);
+  }
+
+  .newsletter-form {
+    flex-direction: column;
+  }
+
+
+
+  .footer-bottom-links {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+}

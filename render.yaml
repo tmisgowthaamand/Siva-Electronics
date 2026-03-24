@@ -1,0 +1,39 @@
+services:
+  - type: web
+    name: siva-electronics-backend
+    runtime: node
+    region: oregon
+    plan: free
+    buildCommand: cd backend && npm install
+    startCommand: cd backend && npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: PAYTM_MERCHANT_ID
+        sync: false
+      - key: PAYTM_MERCHANT_KEY
+        sync: false
+      - key: PAYTM_WEBSITE
+        value: DEFAULT
+      - key: PAYTM_CHANNEL_ID
+        value: WEB
+      - key: PAYTM_INDUSTRY_TYPE
+        value: Retail
+      - key: PAYTM_API_URL
+        value: https://securegw.paytm.in/theia/api/v1
+      - key: PAYTM_PAYMENT_URL
+        value: https://securegw.paytm.in/theia/api/v1/showPaymentPage
+      - key: CALLBACK_URL
+        sync: false
+      - key: FRONTEND_URL
+        sync: false
+
+  - type: static
+    name: siva-electronics-frontend
+    runtime: static
+    region: oregon
+    plan: free
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
